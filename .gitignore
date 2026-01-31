@@ -1,0 +1,11 @@
+.DS_Store
+Thumbs.db
+*.log
+backend/.env
+backend/__pycache__/
+backend/*.pyc
+backend/user_settings.json
+frontend/build/
+frontend/.dart_tool/
+frontend/.flutter-plugins
+frontend/.flutter-plugins-dependencies
