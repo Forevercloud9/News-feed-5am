@@ -110,7 +110,7 @@
 <body>
 
     <div class="container">
-        <h1>Morning 5 Settings</h1>
+        <h1>Morning 5 設定 (Settings)</h1>
 
         {% if message %}
         <div class="message {{ status }}">{{ message }}</div>
@@ -119,17 +119,17 @@
         <form action="/settings" method="POST">
 
             <div class="form-group">
-                <label>Email Recipients</label>
+                <label>配信先メールアドレス (Email Recipients)</label>
                 <div id="email-container">
                     <!-- JavaScript will populate this -->
                 </div>
                 <button type="button" onclick="addEmailField()"
-                    style="background-color: #17a2b8; margin-top: 10px; width: auto;">+ Add Email</button>
+                    style="background-color: #17a2b8; margin-top: 10px; width: auto;">+ 追加 (Add Email)</button>
                 <input type="hidden" id="initial-emails" value="{{ emails }}">
             </div>
 
             <div class="form-group">
-                <label>Subscribed Genres</label>
+                <label>購読ジャンル (Subscribed Genres)</label>
                 <div class="checkbox-group">
                     {% for key, label in genre_labels.items() %}
                     <label class="checkbox-item">
@@ -142,19 +142,20 @@
             </div>
 
             <div class="form-group">
-                <label>Custom Topics (One per line)</label>
+                <label>カスタムトピック (Custom Topics) <span
+                        style="font-size: 0.8em; font-weight: normal;">※1行に1つ入力</span></label>
                 <textarea name="custom_topics" rows="4"
                     style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;"
-                    placeholder="SpaceX&#10;Vegan Recipes&#10;Kyoto Tourism">{{ custom_topics }}</textarea>
-                <small style="color: #777;">Enter any keyword you want to track.</small>
+                    placeholder="SpaceX&#10;簡単なビーガンレシピ&#10;京都の観光スポット">{{ custom_topics }}</textarea>
+                <small style="color: #777;">興味のあるキーワードを入力してください。</small>
             </div>
 
-            <button type="submit">Save Settings</button>
+            <button type="submit">設定を保存 (Save)</button>
         </form>
 
         <div style="margin-top: 20px; text-align: center;">
-            <a href="/schedule_daily_digest" target="_blank" style="color: #007bff; text-decoration: none;">Run Daily
-                Digest Now &rarr;</a>
+            <a href="/schedule_daily_digest" target="_blank" style="color: #007bff; text-decoration: none;">今すぐニュースを配信する
+                (Run Digest Now) &rarr;</a>
         </div>
     </div>
 

@@ -12,18 +12,18 @@ app = Flask(__name__)
 
 # Genre Labels map for UI
 GENRE_LABELS = {
-    'domestic_business': 'Domestic Business (Japan)',
-    'global_business': 'Global Business (Intl)',
-    'finance': 'Finance & Markets',
-    'global_tech': 'Global Technology',
-    'new_tech': 'AI & New Tech',
-    'corporate_tracking': 'Corporate Watch (JT/BAT)',
-    'entertainment': 'Entertainment',
-    'sports': 'Sports (Ohtani, etc.)',
-    'science': 'Science & Space',
-    'health': 'Health & Wellness',
-    'politics': 'Politics (JP)',
-    'startups': 'Startups & VC'
+    'domestic_business': '国内ビジネス (日本)',
+    'global_business': '国際ビジネス (海外)',
+    'finance': '金融・マーケット',
+    'global_tech': 'IT・テクノロジー (世界)',
+    'new_tech': 'AI・最新技術',
+    'corporate_tracking': '注目企業 (JT/BAT)',
+    'entertainment': 'エンタメ',
+    'sports': 'スポーツ (大谷翔平など)',
+    'science': '科学・宇宙',
+    'health': 'ヘルスケア・健康',
+    'politics': '政治 (日本)',
+    'startups': 'スタートアップ'
 }
 
 def load_local_settings():
