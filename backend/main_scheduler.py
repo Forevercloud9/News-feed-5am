@@ -6,7 +6,11 @@ from agents.news_aggregator import NewsAggregator
 from agents.content_processor import ContentProcessor
 from services.email_service import EmailService
 from services.firestore_service import FirestoreService
+from services.firestore_service import FirestoreService
 import json
+import schedule
+import time
+import threading
 
 app = Flask(__name__)
 
@@ -131,8 +135,17 @@ logger = logging.getLogger(__name__)
 @app.route('/schedule_daily_digest', methods=['POST', 'GET'])
 def schedule_daily_digest():
     """
-    Entry point for Cloud Scheduler.
-    This function triggers the daily news aggregation and delivery process.
+    HTTP Endpoint for manual triggering (or Cloud Scheduler).
+    """
+    success, msg = process_daily_digest()
+    if success:
+        return msg, 200
+    else:
+        return msg, 500
+
+def process_daily_digest():
+    """
+    Core logic to trigger the daily news aggregation and delivery process.
     Target Schedule: 04:30 JST (Previous day 19:30 UTC)
     """
     try:
@@ -166,7 +179,7 @@ def schedule_daily_digest():
                         'emails': [default_sender]
                     }]
                 else:
-                     return "No users and no default sender configured.", 200
+                     return False, "No users and no default sender configured."
 
         email_service = EmailService(provider='gmail')
         aggregator = NewsAggregator()
@@ -226,13 +239,27 @@ def schedule_daily_digest():
             logger.info(f"Sent digest to {len(recipients)} recipients for user {user_id}.")
 
         logger.info("Daily Digest Process Completed Successfully.")
-        return "Daily digest sent successfully", 200
+        return True, "Daily digest sent successfully"
 
     except Exception as e:
         logger.error(f"Error in daily digest process: {str(e)}")
-        return f"Error: {str(e)}", 500
+        return False, f"Error: {str(e)}"
+
+def run_scheduler_loop():
+    logger.info("Scheduler thread started. Waiting for 05:00 JST...")
+    # Schedule automated job
+    schedule.every().day.at("05:00").do(process_daily_digest)
+    
+    while True:
+        schedule.run_pending()
+        time.sleep(60)
 
 if __name__ == '__main__':
+    # Start Scheduler in Background Thread
+    t = threading.Thread(target=run_scheduler_loop)
+    t.daemon = True
+    t.start()
+
     # Local development server
     port = int(os.environ.get('PORT', 8080))
     app.run(host='0.0.0.0', port=port)
